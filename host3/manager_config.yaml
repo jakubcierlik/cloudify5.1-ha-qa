@@ -1,0 +1,62 @@
+manager:
+  private_ip: 192.168.121.139
+  public_ip: 10.239.3.65
+  security:
+    ssl_enabled: true
+    admin_password: strongsecretadminpassword
+  cloudify_license_path: /home/centos/license.yaml
+
+postgresql_server:
+  ca_path: '/home/centos/.cloudify-test-ca/ca.crt'
+
+  cluster:
+    nodes:
+      cfy5.1-1.openstacklocal:
+        ip: 10.239.3.63
+      cfy5.1-2.openstacklocal:
+        ip: 10.239.3.64
+      cfy5.1-3.openstacklocal:
+        ip: 10.239.3.65
+
+postgresql_client:
+  server_password: 'areallystrongandsecretpasswordforpostgres'
+  ssl_enabled: true
+
+rabbitmq:
+  username: cloudify
+  password: areallystrongandsecretpasswordforrabbit
+
+  ca_path: '/home/centos/.cloudify-test-ca/ca.crt'
+
+  cluster_members:
+    cfy5.1-1.openstacklocal:
+      networks:
+        default: 10.239.3.63
+    cfy5.1-2.openstacklocal:
+      networks:
+        default: 10.239.3.64
+    cfy5.1-3.openstacklocal:
+      networks:
+        default: 10.239.3.65
+
+ssl_inputs:
+  external_cert_path: '/home/centos/.cloudify-test-ca/10.239.3.65.crt'
+  external_key_path: '/home/centos/.cloudify-test-ca/10.239.3.65.key'
+  internal_cert_path: '/home/centos/.cloudify-test-ca/10.239.3.65.crt'
+  internal_key_path: '/home/centos/.cloudify-test-ca/10.239.3.65.key'
+  ca_cert_path: '/home/centos/.cloudify-test-ca/ca.crt'
+  external_ca_cert_path: '/home/centos/.cloudify-test-ca/ca.crt'
+
+prometheus:
+  credentials:
+    username: 'monitoringusername'
+    password: 'longyeteasytorememberstringasapassword'
+
+  cert_path: '/home/centos/.cloudify-test-ca/10.239.3.65.crt'
+  key_path: '/home/centos/.cloudify-test-ca/10.239.3.65.key'
+  ca_path: '/home/centos/.cloudify-test-ca/ca.crt'
+
+services_to_install:
+  - manager_service
+  - monitoring_service
+

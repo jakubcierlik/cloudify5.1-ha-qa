@@ -1,0 +1,42 @@
+manager:
+  private_ip: 192.168.121.138
+  public_ip: 10.239.3.64
+
+rabbitmq:
+  username: cloudify
+  password: areallystrongandsecretpasswordforrabbit
+
+  cert_path: '/home/centos/.cloudify-test-ca/10.239.3.64.crt'
+  key_path: '/home/centos/.cloudify-test-ca/10.239.3.64.key'
+  ca_path: '/home/centos/.cloudify-test-ca/ca.crt'
+
+  cluster_members:
+    cfy5.1-1.openstacklocal:
+      networks:
+        default: 10.239.3.63
+    cfy5.1-2.openstacklocal:
+      networks:
+        default: 10.239.3.64
+    cfy5.1-3.openstacklocal:
+      networks:
+        default: 10.239.3.65
+
+  nodename: cfy5.1-2.openstacklocal
+
+  join_cluster: cfy5.1-1.openstacklocal
+
+  erlang_cookie: anothersecurepasswordlikestring
+
+prometheus:
+  credentials:
+    username: 'monitoringusername'
+    password: 'longyeteasytorememberstringasapassword'
+
+  cert_path: '/home/centos/.cloudify-test-ca/10.239.3.64.crt'
+  key_path: '/home/centos/.cloudify-test-ca/10.239.3.64.key'
+  ca_path: '/home/centos/.cloudify-test-ca/ca.crt'
+
+services_to_install:
+  - queue_service
+  - monitoring_service
+
